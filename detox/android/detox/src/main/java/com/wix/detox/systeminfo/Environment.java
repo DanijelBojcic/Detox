@@ -1,15 +1,22 @@
 package com.wix.detox.systeminfo;
 
 import android.os.Build;
+import android.util.Log;
 
 public class Environment {
+    public static final String DEVICE_LOCALHOST = "ws://localhost";
     public static final String EMULATOR_LOCALHOST = "ws://10.0.2.2";
     public static final String GENYMOTION_LOCALHOST = "ws://10.0.3.2";
-    public static final String DEVICE_LOCALHOST = "ws://localhost";
+    public static final String GENYMOTION_CLOUD_LOCALHOST = DEVICE_LOCALHOST;
 
     private static boolean isRunningOnGenymotion() {
         return Build.FINGERPRINT.contains("vbox")
                 || Build.MANUFACTURER.contains("Genymotion");
+    }
+
+    private static boolean isRunningOnGenycloud() {
+        return isRunningOnGenymotion()
+                && Build.MODEL.startsWith("Detox"); // Model is set to instance name, provided by the (JS) Detox-tester code
     }
 
     private static boolean isRunningOnStockEmulator() {
@@ -23,8 +30,9 @@ public class Environment {
     }
 
     public static String getServerHost() {
-        // Since genymotion runs in vbox it use different hostname to refer to adb host.
-        // We detect whether app runs on genymotion and replace js bundle server hostname accordingly
+        if (isRunningOnGenycloud()) {
+            return GENYMOTION_CLOUD_LOCALHOST;
+        }
 
         if (isRunningOnGenymotion()) {
             return GENYMOTION_LOCALHOST;

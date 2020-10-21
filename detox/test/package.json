@@ -128,6 +128,20 @@
           "avdName": "Pixel_API_28"
         }
       },
+      "android.genycloud.debug": {
+        "binaryPath": "android/app/build/outputs/apk/fromBin/debug/app-fromBin-debug.apk",
+        "build": "cd android && ./gradlew assembleFromBinDebug assembleFromBinDebugAndroidTest -DtestBuildType=debug && cd ..",
+        "type": "android.genycloud",
+        "device": {
+          "recipeName": "L337z p1xel"
+        }
+      },
+      "android.genycloud.release": {
+        "binaryPath": "android/app/build/outputs/apk/fromBin/release/app-fromBin-release.apk",
+        "build": "cd android && ./gradlew assembleFromBinRelease assembleFromBinReleaseAndroidTest -DtestBuildType=release && cd ..",
+        "type": "android.genycloud",
+        "name": "L337z p1xel"
+      },
       "android.emu.debug.fromSource": {
         "binaryPath": "android/app/build/outputs/apk/fromSource/debug/app-fromSource-debug.apk",
         "utilBinaryPaths": [

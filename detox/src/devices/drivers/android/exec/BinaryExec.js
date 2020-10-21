@@ -25,7 +25,11 @@ class BinaryExec {
   }
 
   async exec(command) {
-    return (await exec(`"${this.binary}" ${command._getArgsString()}`)).stdout;
+    return this.execRaw(command._getArgsString());
+  }
+
+  async execRaw(args) {
+    return (await exec(`"${this.binary}" ${args}`)).stdout;
   }
 
   spawn(command, stdout, stderr) {

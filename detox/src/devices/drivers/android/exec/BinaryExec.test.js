@@ -69,6 +69,23 @@ describe('BinaryExec', () => {
     });
   });
 
+  describe('exec as raw execution line', () => {
+    it('should execute as-is', async () => {
+      await binaryExec.execRaw('--some mock argz');
+      expect(exec).toHaveBeenCalledWith(`"${binaryPath}" --some mock argz`);
+    });
+
+    it('should return content of resolved promise\'s stdout', async () => {
+      const execResult = {
+        stdout: 'mock stdout content'
+      };
+      exec.mockResolvedValue(execResult);
+
+      const result = await binaryExec.execRaw('--some mock argz');
+      expect(result).toEqual(execResult.stdout);
+    });
+  });
+
   describe('spawn', () => {
     it('should spawn the binary with a real command', async () => {
       const command = anEmptyCommand();
